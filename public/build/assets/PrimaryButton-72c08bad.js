@@ -1,0 +1,1 @@
+import{o as s,f as o,r}from"./app-4f64cf1e.js";const n=["type"],u={__name:"PrimaryButton",props:["submit"],setup(t){return(e,a)=>(s(),o("button",{class:"btn btn-primary",type:t.submit?"submit":"button"},[r(e.$slots,"default")],8,n))}};export{u as _};

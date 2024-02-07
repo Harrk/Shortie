@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper-c27b6911.js";import{o as r,f as s,r as t}from"./app-4f64cf1e.js";const c={},n={class:"bg-base-100 p-3 md:p-4 rounded-box"};function a(o,_){return r(),s("div",n,[t(o.$slots,"default")])}const l=e(c,[["render",a]]);export{l as B};
