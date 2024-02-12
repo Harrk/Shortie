@@ -1428,10 +1428,10 @@ vite@^4.0.0:
   optionalDependencies:
     fsevents "~2.3.2"
 
-vue3-apexcharts@^1.4.4:
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/vue3-apexcharts/-/vue3-apexcharts-1.4.4.tgz#3fd5f97a79dd323d37c996a44617bb2ec9978152"
-  integrity sha512-TH89uZrxGjaDvkaYAISvj8+k6Bf1rUKFillc8oJirs5XZEPiwM1ELKZQ786wz0rfPqkSHHny2lqqUCK7Rw+LcQ==
+vue3-apexcharts@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/vue3-apexcharts/-/vue3-apexcharts-1.5.2.tgz#fc179d80e34e6f25982dae809c27173d7374db48"
+  integrity sha512-rGbgUJDjtsyjfRF0uzwDjzt8+M7ICSRAbm1N9KCDiczW8BSpbEZuaEsJDJYnJuLFIIVXIGilYzIcjNBf6NbeYA==
 
 vue3-toastify@^0.2.1:
   version "0.2.1"
