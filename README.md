@@ -11,9 +11,9 @@ Created with Laravel, Vue, and Inertia.
 * Domain management for self-managed domains.
 
 ## Requirements
-* PHP 8.2
-* MySQL (Postgre may be OK)
-* Node v18 (for building assets)
+* PHP 8.2 / PHP 8.3
+* MySQL / Postgre / SQLite
+* Node v18: For rebuilding assets (optional)
 
 ## Installation
 First download the project to where you intend to host it from.

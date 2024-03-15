@@ -29,7 +29,7 @@ test('shortUrl can be viewed', function () {
     $this->assertDatabaseHas('short_url_logs', [
         'short_url_id' => $shortUrl->id,
         'device' => 'Macintosh',
-        'device_type' => 'desktop',
+        'device_type' => 'Desktop',
         'platform' => 'OS X',
         'browser' => 'Safari',
         'referer' => 'https://example.com',

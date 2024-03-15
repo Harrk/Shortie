@@ -24,7 +24,7 @@ class ShortUrlViewedController extends Controller
 
             $shortUrl->logs()->create([
                 'device' => Agent::device(),
-                'device_type' => Agent::deviceType(),
+                'device_type' => Str::title(Agent::deviceType()),
                 'platform' => Str::ucfirst(Agent::platform()),
                 'browser' => Agent::browser(),
                 'referer' => $request->header('referer'),
