@@ -17,7 +17,7 @@
         "vue": "^3.2.41"
     },
     "dependencies": {
-        "apexcharts": "^3.45.2",
+        "apexcharts": "^3.48.0",
         "copy-to-clipboard": "^3.3.3",
         "daisyui": "^4.5.0",
         "qrcode": "^1.5.3",
