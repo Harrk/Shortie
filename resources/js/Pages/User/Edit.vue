@@ -2,9 +2,7 @@
     <Head :title="`${ verb } User`" />
 
     <AuthenticatedLayout>
-        <Block>
-            <h2 class="font-semibold text-lg">{{ verb }} User</h2>
-
+        <Block :title="`${ verb } User`">
             <form
                 class="flex flex-col space-y-4"
                 @submit.prevent="save"

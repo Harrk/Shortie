@@ -49,6 +49,14 @@
                                 >
                                     {{ shortUrl.short_url }}
                                 </div>
+
+                                <span
+                                    v-if="! shortUrl.is_active"
+                                    class="badge badge-outline badge-error badge-sm float-right"
+                                >
+                                    Inactive
+                                </span>
+
                                 <div class="text-xs text-base-content/60 max-w-40 md:max-w-96 truncate">{{ shortUrl.url }}</div>
                                 <div class="md:hidden text-xs text-base-content/60">Clicks: {{ shortUrl.clicks }}</div>
                             </td>

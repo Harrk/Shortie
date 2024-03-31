@@ -2,9 +2,7 @@
     <Head title="Settings" />
 
     <AuthenticatedLayout>
-        <Block>
-            <h2 class="font-semibold text-lg">Settings</h2>
-
+        <Block title="Settings">
             <form
                 class="flex flex-col space-y-4"
                 @submit.prevent="save"

@@ -6,9 +6,10 @@
             Hi, {{ $page.props.auth.user.name }}.
         </Block>
 
-        <Block class="md:w-1/2">
-            <h2 class="font-semibold text-lg">Quick Create Short URL</h2>
-
+        <Block
+            class="md:w-1/2"
+            title="Quick Create Short URL"
+        >
             <form
                 @submit.prevent="form.post(route('short-url.store'))"
                 class="flex flex-col space-y-4 flex-1"

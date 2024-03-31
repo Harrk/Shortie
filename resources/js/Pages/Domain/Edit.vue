@@ -2,9 +2,7 @@
     <Head :title="`${ verb } Domain`" />
 
     <AuthenticatedLayout>
-        <Block>
-            <h2 class="font-semibold text-lg">{{ verb }} Domain</h2>
-
+        <Block :title="`${ verb} Domains`">
             <form
                 class="flex flex-col space-y-4"
                 @submit.prevent="save"

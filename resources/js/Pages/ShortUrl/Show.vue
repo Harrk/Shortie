@@ -61,8 +61,10 @@
             </div>
         </div>
 
-        <Block class="hidden md:block">
-            <h2 class="font-semibold text-lg">Clicks Over Time</h2>
+        <Block
+            class="hidden md:block"
+            title="Clicks Over Time"
+        >
             <ClicksOverTime
                 :darkMode="true"
                 :data="clicksOverTime"
@@ -71,9 +73,7 @@
         </Block>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Block>
-                <h2 class="font-semibold text-lg">Top Devices</h2>
-
+            <Block title="Top Devices">
                 <div class="flex flex-col space-y-1 mt-1">
                     <div
                         v-for="(count, device) in topDevices"
@@ -86,9 +86,7 @@
                 </div>
             </Block>
 
-            <Block>
-                <h2 class="font-semibold text-lg">Top Device Types</h2>
-
+            <Block title="Top Device Types">
                 <div class="flex flex-col space-y-1 mt-1">
                     <div
                         v-for="(count, deviceType) in topDeviceTypes"
@@ -101,9 +99,7 @@
                 </div>
             </Block>
 
-            <Block>
-                <h2 class="font-semibold text-lg">Top Operating Systems</h2>
-
+            <Block title="Top Operating Systems">
                 <div class="flex flex-col space-y-1 mt-1">
                     <div
                         v-for="(count, topOperatingSystem) in topOperatingSystems"
@@ -116,9 +112,7 @@
                 </div>
             </Block>
 
-            <Block>
-                <h2 class="font-semibold text-lg">Top Browsers</h2>
-
+            <Block title="Top Browsers">
                 <div class="flex flex-col space-y-1 mt-1">
                     <div
                         v-for="(count, topBrowser) in topBrowsers"

@@ -2,10 +2,11 @@
     <Head :title="`${ verb } Short URL`" />
 
     <AuthenticatedLayout>
-        <Block>
-            <h2 class="font-semibold text-lg">{{ verb }} Short URL</h2>
-
-            <form @submit.prevent="save">
+        <Block :title="`${ verb } Short URL`">
+            <form
+                id="short-url-form"
+                @submit.prevent="save"
+            >
                 <div class="md:flex md:flex-row md:space-x-4">
                     <div class="flex flex-col space-y-4 flex-1">
                         <FieldInput
@@ -14,6 +15,7 @@
                             :disabled="form.processing"
                             v-model="form.url"
                             :error="form.errors.url"
+                            :required="true"
                         />
 
                         <!-- Todo: Turn into component -->
@@ -50,6 +52,7 @@
                             :disabled="form.processing"
                             v-model="form.slug"
                             :error="form.errors.slug"
+                            :required="true"
                         />
                     </div>
 
@@ -60,25 +63,39 @@
                         />
                     </div>
                 </div>
-
-                <div class="flex flex-row-reverse space-x-2 space-x-reverse mt-4">
-                    <PrimaryButton
-                        :disabled="form.processing"
-                        :submit="true"
-                    >
-                        {{ verb }}
-                    </PrimaryButton>
-
-                    <NeutralButton
-                        v-if="form.id"
-                        :disabled="form.processing"
-                        @click="deleteShortUrl()"
-                    >
-                        Delete
-                    </NeutralButton>
-                </div>
             </form>
         </Block>
+
+        <Block title="Behaviour">
+            <FieldInput
+                label="Max visits"
+                placeholder="No limit"
+                :disabled="form.processing"
+                v-model="form.max_visits"
+                :error="form.errors.max_visits"
+                type="number"
+                help="The Short URL will deactivate once it reaches the maximum number of visits specified. Leave blank for no limit."
+                form="short-url-form"
+            />
+        </Block>
+
+        <div class="flex flex-row-reverse space-x-2 space-x-reverse mt-4">
+            <PrimaryButton
+                :disabled="form.processing"
+                :submit="true"
+                form="short-url-form"
+            >
+                {{ verb }}
+            </PrimaryButton>
+
+            <NeutralButton
+                v-if="form.id"
+                :disabled="form.processing"
+                @click="deleteShortUrl()"
+            >
+                Delete
+            </NeutralButton>
+        </div>
     </AuthenticatedLayout>
 </template>
 

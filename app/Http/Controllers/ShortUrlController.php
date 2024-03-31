@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ShortUrlStatus;
 use App\Http\Requests\ShortUrl\ShortUrlDestroyRequest;
 use App\Http\Requests\ShortUrl\ShortUrlStoreRequest;
 use App\Http\Requests\ShortUrl\ShortUrlUpdateRequest;
@@ -11,6 +12,7 @@ use App\Models\ShortUrl;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -186,7 +188,16 @@ class ShortUrlController extends Controller
 
     public function update(ShortUrlUpdateRequest $request, ShortUrl $shortUrl)
     {
-        $shortUrl->update($request->validated());
+        DB::transaction(function () use ($request, $shortUrl) {
+            $shortUrl->fill($request->validated());
+
+            // Ensure status responds to the max visits field.
+            $shortUrl->status = ($shortUrl->max_visits === null || $shortUrl->max_visits > $shortUrl->clicks)
+                ? ShortUrlStatus::ACTIVE
+                : ShortUrlStatus::INACTIVE;
+
+            $shortUrl->save();
+        });
 
         return redirect()->route('short-url.edit', $shortUrl);
     }
