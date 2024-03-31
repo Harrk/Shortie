@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\shortUrl;
+use App\Models\ShortUrl;
 use App\Models\User;
 
 class ShortUrlPolicy
