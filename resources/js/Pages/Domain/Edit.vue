@@ -12,6 +12,7 @@
                     placeholder="https://your-domain.com"
                     :disabled="form.processing"
                     v-model="form.url"
+                    :required="true"
                     :error="form.errors.url"
                 />
 

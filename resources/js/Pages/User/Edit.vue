@@ -11,6 +11,7 @@
                     label="Name"
                     :disabled="form.processing"
                     v-model="form.name"
+                    :required="true"
                     :error="form.errors.name"
                 />
 
@@ -18,6 +19,7 @@
                     label="Email"
                     :disabled="form.processing"
                     v-model="form.email"
+                    :required="true"
                     :error="form.errors.email"
                 />
 
