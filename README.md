@@ -38,7 +38,7 @@ Configure your `.env` file with your database credentials.
 $ php artisan migrate
 ```
 
-**Optional:** Assets are prebuilt but you can rebuild them with the following:
+**Optional:** Assets are prebuilt, but you can rebuild them with the following:
 ```bash
 $ yarn && yarn build
 ```
