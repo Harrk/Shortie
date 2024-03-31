@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\Role;
+use App\Enums\ShortUrlStatus;
 use App\Models\ShortUrl;
 use App\Models\User;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -191,6 +192,47 @@ describe('User can manage own ShortURLs', function () {
 
         $response = $this->delete(route('short-url.destroy', $shortUrl));
         $response->assertStatus(302);
+    })->with(Role::cases());
+
+    test('Updating ShortURL Max Visits Also Restores Active Status', function (Role $role) {
+        $user = User::factory()->create(['role' => $role]);
+        $this->actingAs($user);
+        $shortUrl = ShortUrl::factory()->create([
+            'user_id' => $user->id,
+            'status' => ShortUrlStatus::INACTIVE,
+            'max_visits' => 1,
+        ]);
+
+        $shortUrl->max_visits = 10;
+
+        $response = $this->put(route('short-url.update', $shortUrl), $shortUrl->toArray());
+        $response->assertStatus(302);
+        $this->assertDatabaseHas('short_urls', [
+            'id' => $shortUrl->id,
+            'max_visits' => 10,
+            'status' => ShortUrlStatus::ACTIVE,
+        ]);
+    })->with(Role::cases());
+
+    test('Updating ShortURL Max Visits Does Not Restore Active Status', function (Role $role) {
+        $user = User::factory()->create(['role' => $role]);
+        $this->actingAs($user);
+        $shortUrl = ShortUrl::factory()->create([
+            'user_id' => $user->id,
+            'status' => ShortUrlStatus::INACTIVE,
+            'max_visits' => 10,
+            'clicks' => 10,
+        ]);
+
+        $shortUrl->max_visits = 1;
+
+        $response = $this->put(route('short-url.update', $shortUrl), $shortUrl->toArray());
+        $response->assertStatus(302);
+        $this->assertDatabaseHas('short_urls', [
+            'id' => $shortUrl->id,
+            'max_visits' => 1,
+            'status' => ShortUrlStatus::INACTIVE,
+        ]);
     })->with(Role::cases());
 });
 

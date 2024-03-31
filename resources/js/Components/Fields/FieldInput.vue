@@ -1,16 +1,26 @@
 <template>
-    <div>
+    <div class="max-w-lg">
         <label
             v-if="label"
             class="label"
         >
-            {{ label }}
+            <span>
+                {{ label }}
+
+                <span
+                    v-if="required"
+                    class=" text-red-500 text-sm"
+                >
+                    *
+                </span>
+            </span>
         </label>
 
         <input
             :placeholder="placeholder"
             :disabled="disabled"
-            class="input input-bordered w-full max-w-lg"
+            class="input input-bordered w-full"
+            :form="form"
             :value="modelValue"
             :required="required"
             :type="type ? type : 'text'"
@@ -22,6 +32,13 @@
             class="text-red-500 text-sm mt-1"
         >
             {{ error }}
+        </p>
+
+        <p
+            v-if="help"
+            class="text-base-content text-sm mt-1"
+        >
+            {{ help }}
         </p>
     </div>
 </template>
@@ -35,6 +52,8 @@
         'modelValue',
         'type',
         'required',
+        'help',
+        'form',
     ]);
 
     defineEmits(['update:modelValue']);

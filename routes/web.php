@@ -11,12 +11,12 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Dashboard');
     })->middleware(['auth', 'verified'])->name('dashboard');
 
-    require __DIR__.'/app/short-url.php';
-    require __DIR__.'/app/domain.php';
-    require __DIR__.'/app/user.php';
-    require __DIR__.'/app/settings.php';
+    require 'app/short-url.php';
+    require 'app/domain.php';
+    require 'app/user.php';
+    require 'app/settings.php';
 });
 
-require __DIR__.'/auth.php';
+require 'auth.php';
 
 Route::get('{slug}', ShortUrlViewedController::class);

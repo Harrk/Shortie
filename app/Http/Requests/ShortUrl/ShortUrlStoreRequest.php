@@ -35,6 +35,7 @@ class ShortUrlStoreRequest extends FormRequest
                     ->where('slug', $this->input('slug')),
             ],
             'url' => 'required|url',
+            'max_visits' => 'nullable|int|min:0',
         ];
     }
 
