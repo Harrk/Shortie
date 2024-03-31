@@ -42,3 +42,24 @@ test('shortUrl can be viewed', function () {
 
     Event::assertDispatched(ShortUrlViewed::class);
 });
+
+test('device type is recorded as unknown', function () {
+    $shortUrl = ShortUrl::factory()->create();
+
+    $response = $this->get($shortUrl->short_url, [
+        'User-Agent' => 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; MATP; MATP)',
+        'referer' => 'https://example.com',
+    ]);
+
+    $response->assertStatus(302);
+    $response->assertRedirect($shortUrl->url);
+
+    $this->assertDatabaseHas('short_url_logs', [
+        'short_url_id' => $shortUrl->id,
+        'device' => 'Unknown',
+        'device_type' => 'Desktop',
+        'platform' => 'Windows',
+        'browser' => 'IE',
+        'referer' => 'https://example.com',
+    ]);
+});

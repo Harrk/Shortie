@@ -12,6 +12,8 @@ use Jenssegers\Agent\Facades\Agent;
 
 class ShortUrlViewedController extends Controller
 {
+    private const UNKNOWN = 'Unknown';
+
     public function __invoke(Request $request, $slug): RedirectResponse
     {
         $domain = Domain::where('url', request()->getSchemeAndHttpHost())->firstOrFail();
@@ -24,9 +26,9 @@ class ShortUrlViewedController extends Controller
 
             $shortUrl->logs()->create([
                 'device' => $this->parseAgentDevice(),
-                'device_type' => Str::title(Agent::deviceType()),
-                'platform' => Str::ucfirst(Agent::platform()),
-                'browser' => Agent::browser(),
+                'device_type' => Str::title($this->parseAgentDeviceType()),
+                'platform' => Str::ucfirst($this->parseAgentPlatform()),
+                'browser' => $this->parseAgentBrowser(),
                 'referer' => $request->header('referer'),
                 'is_bot' => Agent::isRobot(),
                 'hash' => $hash,
@@ -42,6 +44,21 @@ class ShortUrlViewedController extends Controller
 
     protected function parseAgentDevice(): string
     {
-        return Agent::device() === '0' ? 'Unknown' : Agent::device();
+        return Agent::device() ?: self::UNKNOWN;
+    }
+
+    protected function parseAgentDeviceType(): string
+    {
+        return Agent::deviceType() ?: self::UNKNOWN;
+    }
+
+    protected function parseAgentPlatform(): string
+    {
+        return Agent::platform() ?: self::UNKNOWN;
+    }
+
+    protected function parseAgentBrowser(): string
+    {
+        return Agent::browser() ?: self::UNKNOWN;
     }
 }
