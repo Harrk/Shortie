@@ -82,7 +82,7 @@ test('Short URL is set to inactive if max visits is set', function () {
 
     $this->assertDatabaseHas('short_urls', [
         'id' => $shortUrl->id,
-        'status' => ShortUrlStatus::INACTIVE
+        'status' => ShortUrlStatus::INACTIVE,
     ]);
 
     $this->assertDatabaseCount('short_url_logs', 1);
