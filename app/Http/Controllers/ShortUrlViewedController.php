@@ -23,7 +23,7 @@ class ShortUrlViewedController extends Controller
             $hash = md5(Agent::getUserAgent().$request->ip().$shortUrl->short_url);
 
             $shortUrl->logs()->create([
-                'device' => Agent::device(),
+                'device' => $this->parseAgentDevice(),
                 'device_type' => Str::title(Agent::deviceType()),
                 'platform' => Str::ucfirst(Agent::platform()),
                 'browser' => Agent::browser(),
@@ -38,5 +38,10 @@ class ShortUrlViewedController extends Controller
         event(new ShortUrlViewed($shortUrl));
 
         return redirect()->away($shortUrl->url);
+    }
+
+    protected function parseAgentDevice(): string
+    {
+        return Agent::device() === '0' ? 'Unknown' : Agent::device();
     }
 }
