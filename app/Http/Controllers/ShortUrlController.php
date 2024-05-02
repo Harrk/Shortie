@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\ShortUrlStatus;
 use App\Http\Requests\ShortUrl\ShortUrlDestroyRequest;
+use App\Http\Requests\ShortUrl\ShortUrlIndexRequest;
 use App\Http\Requests\ShortUrl\ShortUrlStoreRequest;
 use App\Http\Requests\ShortUrl\ShortUrlUpdateRequest;
 use App\Http\Resources\ShortUrlResource;
@@ -23,22 +24,27 @@ class ShortUrlController extends Controller
         $this->authorizeResource(ShortUrl::class, 'short_url');
     }
 
-    public function index()
+    public function index(ShortUrlIndexRequest $request)
     {
-        $filters = request()->get('filters');
-
         $shortUrls = ShortUrl::query()
             ->when(! Auth::user()->isSuper(), function ($q) {
                 $q->where('user_id', Auth::id());
             })
-            ->when(Arr::get($filters, 'domain_id'), fn ($q) => $q->where('domain_id', $filters['domain_id']))
-            ->latest()
+            ->when(
+                $request->input('filters.domain_id'),
+                fn ($q) => $q->where('domain_id', $request->input('filters.domain_id'))
+            )
+            ->orderBy(
+                $request->input('sort.field', 'created_at'),
+                $request->input('sort.order', 'desc')
+            )
             ->paginate();
 
         return Inertia::render('ShortUrl/Index', [
             'shortUrls' => ShortUrlResource::collection($shortUrls),
             'domains' => Domain::pluck('url', 'id'),
-            'filters' => $filters,
+            'filters' => $request->input('filters'),
+            'sort' => $request->input('sort'),
         ]);
     }
 

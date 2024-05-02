@@ -31,8 +31,38 @@
                     <thead>
                         <tr>
                             <th>URL</th>
-                            <th class="hidden md:table-cell">Clicks</th>
-                            <th class="hidden md:table-cell">Created</th>
+                            <th class="hidden md:table-cell">
+                                <span
+                                    class="cursor-pointer text-primary"
+                                    @click="toggleSort('clicks')"
+                                >
+                                    Clicks
+                                </span>
+
+                                <IconChevronDown
+                                    class="w-3 h-3 inline-block align-middle ml-1 opacity-0"
+                                    :class="{
+                                        'rotate-180': form.sort.order === 'asc',
+                                        'opacity-100': form.sort.field === 'clicks'
+                                    }"
+                                />
+                            </th>
+                            <th class="hidden md:table-cell">
+                                <span
+                                    class="cursor-pointer text-primary"
+                                    @click="toggleSort('created_at')"
+                                >
+                                    Created
+                                </span>
+
+                                <IconChevronDown
+                                    class="w-3 h-3 inline-block align-middle ml-1 opacity-0"
+                                    :class="{
+                                        'rotate-180': form.sort.order === 'asc',
+                                        'opacity-100': form.sort.field === 'created_at'
+                                    }"
+                                />
+                            </th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -99,16 +129,22 @@
     import Pagination from "@/Components/Table/Pagination.vue";
     import FieldSelect from "@/Components/Fields/FieldSelect.vue";
     import copy from 'copy-to-clipboard';
+    import IconChevronDown from "@/Components/Icons/IconChevronDown.vue";
 
     const props = defineProps([
         'shortUrls',
         'domains',
         'filters',
+        'sort',
     ]);
 
     const form = useForm({
         filters: {
             domain_id: props.filters?.domain_id || '',
+        },
+        sort: {
+            field: props.sort?.field || 'created_at',
+            order: props.sort?.order || 'desc',
         }
     });
 
@@ -118,6 +154,17 @@
 
     const copyToClipboard = (value) => {
         copy(value);
+    }
+
+    const toggleSort = (field) => {
+        if (form.sort.field === field) {
+            form.sort.order = form.sort.order === 'desc' ? 'asc' : 'desc';
+        } else {
+            form.sort.order = 'desc';
+        }
+
+        form.sort.field = field;
+        refreshData();
     }
 </script>
 
