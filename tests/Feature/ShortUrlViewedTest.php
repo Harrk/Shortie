@@ -18,7 +18,9 @@ test('shortUrl can be viewed', function () {
         ShortUrlViewed::class,
     ]);
 
-    $shortUrl = ShortUrl::factory()->create();
+    $shortUrl = ShortUrl::factory()->create([
+        'clicks' => 0,
+    ]);
 
     $response = $this->get($shortUrl->short_url, [
         'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Safari/605.1.1',
@@ -70,6 +72,7 @@ test('device type is recorded as unknown', function () {
 test('Short URL is set to inactive if max visits is set', function () {
     $shortUrl = ShortUrl::factory()->create([
         'max_visits' => 1,
+        'clicks' => 0,
     ]);
 
     $response = $this->get($shortUrl->short_url, [

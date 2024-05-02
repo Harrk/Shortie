@@ -232,6 +232,7 @@ describe('User can manage own ShortURLs', function () {
             'user_id' => $user->id,
             'status' => ShortUrlStatus::INACTIVE,
             'max_visits' => 1,
+            'clicks' => 0,
         ]);
 
         $shortUrl->max_visits = 10;
