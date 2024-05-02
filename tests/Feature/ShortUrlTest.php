@@ -141,6 +141,37 @@ describe('User can manage own ShortURLs', function () {
         $response->assertStatus(200);
     })->with([Role::ADMIN, Role::SUPER_USER]);
 
+    test('Can Sort URLs by Clicks', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $shortUrls = ShortUrl::factory(10)->create([
+            'user_id' => $user->id,
+        ]);
+
+        ShortUrl::factory(10)->create();
+        $params = [
+            'sort' => [
+                'field' => 'clicks',
+                'order' => 'desc',
+            ]
+        ];
+
+        $response = $this->get(route('short-url.index', $params))
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('ShortUrl/Index')
+                ->has('shortUrls.data', 10)
+                ->has('shortUrls', fn (Assert $page) => $page
+                    ->where('data.0.clicks', number_format($shortUrls->max('clicks')))
+                    ->etc()
+                )
+                ->has('shortUrls', fn (Assert $page) => $page
+                    ->where('data.9.clicks', number_format($shortUrls->min('clicks')))
+                    ->etc()
+                )
+            );
+        $response->assertStatus(200);
+    });
+
     test('View ShortURL', function (Role $role) {
         $user = User::factory()->create(['role' => $role]);
         $this->actingAs($user);
