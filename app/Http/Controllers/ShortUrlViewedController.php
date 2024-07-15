@@ -51,7 +51,7 @@ class ShortUrlViewedController extends Controller
 
     protected function fetchShortURLFromRequest(Request $request, $slug): ShortUrl
     {
-        $domain = Domain::where('url', request()->getSchemeAndHttpHost())->firstOrFail();
+        $domain = Domain::where('domain', request()->getHttpHost())->firstOrFail();
 
         return $domain->shortUrls()
             ->where('slug', $slug)

@@ -19,7 +19,7 @@
         <input
             :placeholder="placeholder"
             :disabled="disabled"
-            class="input input-bordered w-full"
+            class="input input-bordered w-full placeholder-base-content/50"
             :form="form"
             :value="modelValue"
             :required="required"

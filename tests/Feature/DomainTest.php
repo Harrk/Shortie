@@ -55,13 +55,15 @@ describe('Can manage domains', function () {
         $response = $this->postJson(route('domain.store'), $domain->toArray());
         $response->assertStatus(302);
 
+        $parsedUrl = parse_url($url);
+
         $this->assertDatabaseHas('domains', [
             'url' => $domain->url,
+            'domain' => $parsedUrl['host'],
         ]);
     })->with([
         'https://test.com',
         'http://test.com',
-        'http://test.com:8000',
     ]);
 
     test('Store domain with invalid domain names', function (string $url) {

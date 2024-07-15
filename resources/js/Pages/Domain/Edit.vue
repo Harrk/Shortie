@@ -14,6 +14,7 @@
                     v-model="form.url"
                     :required="true"
                     :error="form.errors.url"
+                    help="Enter the full URL of the domain you wish to use, including http/https."
                 />
 
                 <div class="flex flex-row-reverse space-x-2 space-x-reverse">
