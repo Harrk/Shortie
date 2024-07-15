@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Domain;
 
+use App\Rules\Domain;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
@@ -14,9 +15,12 @@ class DomainStoreRequest extends FormRequest
             'url' => [
                 'required',
                 'url:http,https',
+            ],
+            'domain' => [
+                new Domain,
                 Rule::unique('domains')
                     ->ignore($this->input('id'))
-                    ->where('url', $this->input('url')),
+                    ->where('domain', $this->input('domain')),
             ],
         ];
     }
@@ -28,10 +32,10 @@ class DomainStoreRequest extends FormRequest
             $parsedUrl = parse_url($this->input('url'));
             $scheme = Arr::get($parsedUrl, 'scheme');
             $host = Arr::get($parsedUrl, 'host');
-            $port = Arr::get($parsedUrl, 'port') ? ':'.Arr::get($parsedUrl, 'port') : null;
 
             $this->merge([
-                'url' => $scheme.'://'.$host.$port,
+                'url' => $scheme.'://'.$host,
+                'domain' => $host,
             ]);
         }
     }

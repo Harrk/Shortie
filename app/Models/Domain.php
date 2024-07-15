@@ -12,6 +12,7 @@ class Domain extends Model
 
     protected $fillable = [
         'url',
+        'domain',
     ];
 
     public function shortUrls(): HasMany
