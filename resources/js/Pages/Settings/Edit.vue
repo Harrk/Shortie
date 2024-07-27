@@ -36,7 +36,7 @@
                     </label>
 
                     <p class="mt-2 pl-1 text-xs text-base-content/80">
-                        Enabling Geolocation will attempted to retrieve a visitor's country/city by the IP address.
+                        Enabling Geolocation will retrieve a visitor's country/city by their IP address.
                         Requires additional <a target="_blank" class="link link-primary" href="https://github.com/Harrk/Shortie?tab=readme-ov-file#enabling-geolocation">configuration</a> before enabling.
                     </p>
                 </div>
