@@ -6,6 +6,7 @@ use App\Enums\ShortUrlStatus;
 use App\Events\ShortUrlViewed;
 use App\Models\Domain;
 use App\Models\ShortUrl;
+use App\Settings\GeneralSettings;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +19,7 @@ class ShortUrlViewedController extends Controller
 {
     private const UNKNOWN = 'Unknown';
 
-    public function __invoke(Request $request, $slug): RedirectResponse|Response
+    public function __invoke(Request $request, GeneralSettings $settings, $slug): RedirectResponse|Response
     {
         $shortUrl = $this->fetchShortURLFromRequest($request, $slug);
 
@@ -26,8 +27,12 @@ class ShortUrlViewedController extends Controller
             return Inertia::render('ShortUrl/Expired');
         }
 
-        DB::transaction(function () use ($request, $shortUrl) {
+        DB::transaction(function () use ($request, $shortUrl, $settings) {
             $hash = md5(Agent::getUserAgent().$request->ip().$shortUrl->short_url);
+
+            if ($settings->enableGeolocation) {
+                $lookupData = geoip()->getLocation($request->ip());
+            }
 
             $shortUrl->logs()->create([
                 'device' => $this->parseAgentDevice(),
@@ -37,6 +42,8 @@ class ShortUrlViewedController extends Controller
                 'referer' => $request->header('referer'),
                 'is_bot' => Agent::isRobot(),
                 'hash' => $hash,
+                'country' => $lookupData->country ?? null,
+                'city' => $lookupData->city ?? null,
             ]);
 
             $shortUrl->increment('clicks');

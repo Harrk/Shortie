@@ -10,6 +10,7 @@ use App\Http\Requests\ShortUrl\ShortUrlUpdateRequest;
 use App\Http\Resources\ShortUrlResource;
 use App\Models\Domain;
 use App\Models\ShortUrl;
+use App\Settings\GeneralSettings;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -48,7 +49,7 @@ class ShortUrlController extends Controller
         ]);
     }
 
-    public function show(ShortUrl $shortUrl)
+    public function show(GeneralSettings $settings, ShortUrl $shortUrl)
     {
         $defaultPeriod = '30 Days';
         // Filters
@@ -115,6 +116,28 @@ class ShortUrlController extends Controller
             ->orderBy('count', 'DESC')
             ->pluck('count', 'browser');
 
+        if ($settings->enableGeolocation) {
+            $topCountries = $shortUrl->logs()
+                ->selectRaw('country, COUNT(*) AS count')
+                ->where('is_bot', false)
+                ->when($periodFrom, fn ($q) => $q->whereDate('created_at', '>=', $periodFrom))
+                ->groupBy('country')
+                ->limit(5)
+                ->orderBy('count', 'DESC')
+                ->pluck('count', 'country')
+                ->mapWithKeys(fn ($value, $key) => [$key === '' ? 'Unknown' : $key => $value]);
+
+            $topCities = $shortUrl->logs()
+                ->selectRaw('city, COUNT(*) AS count')
+                ->where('is_bot', false)
+                ->when($periodFrom, fn ($q) => $q->whereDate('created_at', '>=', $periodFrom))
+                ->groupBy('city')
+                ->limit(5)
+                ->orderBy('count', 'DESC')
+                ->pluck('count', 'city')
+                ->mapWithKeys(fn ($value, $key) => [$key === '' ? 'Unknown' : $key => $value]);
+        }
+
         $chartFrom = today()->subDays(max(7, ($selectedPeriod ?? 30) - 1));
         $days = collect($chartFrom->range(today())->toArray())
             ->map(fn ($date) => $date->format('Y-m-d'));
@@ -156,6 +179,9 @@ class ShortUrlController extends Controller
             'topDeviceTypes' => $topDeviceTypes,
             'topOperatingSystems' => $topOperatingSystems,
             'topBrowsers' => $topBrowsers,
+            'enableGeolocation' => $settings->enableGeolocation,
+            'topCountries' => $topCountries ?? [],
+            'topCities' => $topCities ?? [],
         ]);
     }
 

@@ -29,6 +29,18 @@
                     :options="roles"
                 />
 
+                <div class="form-control max-w-sm">
+                    <label class="label cursor-pointer">
+                        <span class="label-text">Enable Geolocation</span>
+                        <input type="checkbox" checked="checked" class="checkbox" v-model="form.enableGeolocation" />
+                    </label>
+
+                    <p class="mt-2 pl-1 text-xs text-base-content/80">
+                        Enabling Geolocation will retrieve a visitor's country/city by their IP address.
+                        Requires additional <a target="_blank" class="link link-primary" href="https://github.com/Harrk/Shortie?tab=readme-ov-file#enabling-geolocation">configuration</a> before enabling.
+                    </p>
+                </div>
+
                 <div class="flex flex-row-reverse space-x-2 space-x-reverse">
                     <PrimaryButton
                         :submit="true"

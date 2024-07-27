@@ -75,55 +75,107 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Block title="Top Devices">
                 <div class="flex flex-col space-y-1 mt-1">
-                    <div
-                        v-for="(count, device) in topDevices"
-                        :key="device"
-                        class="text-sm text-base-content/80 flex flex-row py-1.5 border-b border-dashed border-base-content/15"
-                    >
-                        <span class="flex-1">{{ device }}</span>
-                        <span>{{ count }}</span>
-                    </div>
+                    <template v-if="Object.values(topDevices).length">
+                        <div
+                            v-for="(count, device) in topDevices"
+                            :key="device"
+                            class="text-sm text-base-content/80 flex flex-row py-1.5 border-b border-dashed border-base-content/15"
+                        >
+                            <span class="flex-1">{{ device }}</span>
+                            <span>{{ count }}</span>
+                        </div>
+                    </template>
+
+                    <p v-else>There is no data for this period.</p>
                 </div>
             </Block>
 
             <Block title="Top Device Types">
                 <div class="flex flex-col space-y-1 mt-1">
-                    <div
-                        v-for="(count, deviceType) in topDeviceTypes"
-                        :key="deviceType"
-                        class="text-sm text-base-content/80 flex flex-row py-1.5 border-b border-dashed border-base-content/15"
-                    >
-                        <span class="flex-1">{{ deviceType }}</span>
-                        <span>{{ count }}</span>
-                    </div>
+                    <template v-if="Object.values(topDeviceTypes).length">
+                        <div
+                            v-for="(count, deviceType) in topDeviceTypes"
+                            :key="deviceType"
+                            class="text-sm text-base-content/80 flex flex-row py-1.5 border-b border-dashed border-base-content/15"
+                        >
+                            <span class="flex-1">{{ deviceType }}</span>
+                            <span>{{ count }}</span>
+                        </div>
+                    </template>
+
+                    <p v-else>There is no data for this period.</p>
                 </div>
             </Block>
 
             <Block title="Top Operating Systems">
                 <div class="flex flex-col space-y-1 mt-1">
-                    <div
-                        v-for="(count, topOperatingSystem) in topOperatingSystems"
-                        :key="topOperatingSystem"
-                        class="text-sm text-base-content/80 flex flex-row py-1.5 border-b border-dashed border-base-content/15"
-                    >
-                        <span class="flex-1">{{ topOperatingSystem }}</span>
-                        <span>{{ count }}</span>
-                    </div>
+                    <template v-if="Object.values(topOperatingSystems).length">
+                        <div
+                            v-for="(count, topOperatingSystem) in topOperatingSystems"
+                            :key="topOperatingSystem"
+                            class="text-sm text-base-content/80 flex flex-row py-1.5 border-b border-dashed border-base-content/15"
+                        >
+                            <span class="flex-1">{{ topOperatingSystem }}</span>
+                            <span>{{ count }}</span>
+                        </div>
+                    </template>
+
+                    <p v-else>There is no data for this period.</p>
                 </div>
             </Block>
 
             <Block title="Top Browsers">
                 <div class="flex flex-col space-y-1 mt-1">
-                    <div
-                        v-for="(count, topBrowser) in topBrowsers"
-                        :key="topBrowser"
-                        class="text-sm text-base-content/80 flex flex-row py-1.5 border-b border-dashed border-base-content/15"
-                    >
-                        <span class="flex-1">{{ topBrowser }}</span>
-                        <span>{{ count }}</span>
-                    </div>
+                    <template v-if="Object.values(topBrowsers).length">
+                        <div
+                            v-for="(count, topBrowser) in topBrowsers"
+                            :key="topBrowser"
+                            class="text-sm text-base-content/80 flex flex-row py-1.5 border-b border-dashed border-base-content/15"
+                        >
+                            <span class="flex-1">{{ topBrowser }}</span>
+                            <span>{{ count }}</span>
+                        </div>
+                    </template>
+
+                    <p v-else>There is no data for this period.</p>
                 </div>
             </Block>
+
+            <template v-if="enableGeolocation">
+                <Block title="Top Countries">
+                    <div class="flex flex-col space-y-1 mt-1">
+                        <template v-if="Object.values(topCountries).length">
+                            <div
+                                v-for="(count, topCountry) in topCountries"
+                                :key="topCountry"
+                                class="text-sm text-base-content/80 flex flex-row py-1.5 border-b border-dashed border-base-content/15"
+                            >
+                                <span class="flex-1">{{ topCountry }}</span>
+                                <span>{{ count }}</span>
+                            </div>
+                        </template>
+
+                        <p v-else>There is no data for this period.</p>
+                    </div>
+                </Block>
+
+                <Block title="Top Cities">
+                    <div class="flex flex-col space-y-1 mt-1">
+                        <template v-if="Object.values(topCities).length">
+                            <div
+                                v-for="(count, topCity) in topCities"
+                                :key="topCity"
+                                class="text-sm text-base-content/80 flex flex-row py-1.5 border-b border-dashed border-base-content/15"
+                            >
+                                <span class="flex-1">{{ topCity }}</span>
+                                <span>{{ count }}</span>
+                            </div>
+                        </template>
+
+                        <p v-else>There is no data for this period.</p>
+                    </div>
+                </Block>
+            </template>
         </div>
     </AuthenticatedLayout>
 </template>
@@ -150,6 +202,9 @@
         'topDeviceTypes',
         'topBrowsers',
         'topOperatingSystems',
+        'topCountries',
+        'topCities',
+        'enableGeolocation',
     ]);
 
     const form = useForm({
