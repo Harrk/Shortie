@@ -16,6 +16,7 @@ class GeneralSettingsUpdateRequest extends FormRequest
                 'required',
                 Rule::in(Role::cases()),
             ],
+            'enableGeolocation' => 'required|boolean',
         ];
     }
 }

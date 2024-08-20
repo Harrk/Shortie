@@ -10,6 +10,8 @@ class GeneralSettings extends Settings
 
     public string $defaultUserRole;
 
+    public bool $enableGeolocation;
+
     public static function group(): string
     {
         return 'general';
