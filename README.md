@@ -56,7 +56,7 @@ this even if you only intend to use a single domain.
 
 ![img-setup.png](img-setup.png)
 
-## Enabaling Geolocation
+## Enabling Geolocation
 Shortie uses the [laravel-geoip](https://github.com/Torann/laravel-geoip) package to assist with fetching the visitor's 
 country and city from their IP address. By default, it uses the MaxMind database which also requires an account.
 
