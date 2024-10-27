@@ -3,6 +3,7 @@
 use App\Enums\ShortUrlStatus;
 use App\Events\ShortUrlViewed;
 use App\Models\ShortUrl;
+use App\Settings\GeneralSettings;
 use Illuminate\Support\Facades\Event;
 use Inertia\Testing\AssertableInertia as Assert;
 
@@ -100,4 +101,70 @@ test('Short URL shows expired page if status is inactive', function () {
         ->assertInertia(fn (Assert $page) => $page
             ->component('ShortUrl/Expired')
         );
+});
+
+test('Short URL Rules: Redirects the user to the original URL if no rule matches', function () {
+    $redirectUrl = 'https://example.co.uk';
+    $shortUrl = ShortUrl::factory()->create([
+        'rules' => [
+            [
+                'key' => 'country',
+                'operator' => '=',
+                'value' => 'United Kingdom',
+                'url' => $redirectUrl,
+            ],
+        ]
+    ]);
+
+    $this->get($shortUrl->short_url, [
+        'User-Agent' => 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; MATP; MATP)',
+        'referer' => 'https://example.com',
+    ])
+        ->assertStatus(302)
+        ->assertRedirect($shortUrl->url);
+
+    $this->assertDatabaseHas('short_url_logs', [
+        'short_url_id' => $shortUrl->id,
+        'device' => 'Unknown',
+        'device_type' => 'Desktop',
+        'platform' => 'Windows',
+        'browser' => 'IE',
+        'referer' => 'https://example.com',
+    ]);
+});
+
+test('Short URL Rules: Redirects the user to the redirected URL if rule matches', function () {
+    $redirectUrl = 'https://example.com';
+    $settings = app(GeneralSettings::class);
+    $settings->fill([
+        'enableGeolocation' => true,
+    ]);
+    $settings->save();
+
+    $shortUrl = ShortUrl::factory()->create([
+        'rules' => [
+            [
+                'key' => 'country',
+                'operator' => '=',
+                'value' => 'United States',
+                'url' => $redirectUrl,
+            ],
+        ]
+    ]);
+
+    $this->get($shortUrl->short_url, [
+        'User-Agent' => 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; MATP; MATP)',
+        'referer' => 'https://example.com',
+    ])
+        ->assertStatus(302)
+        ->assertRedirect($redirectUrl);
+
+    $this->assertDatabaseHas('short_url_logs', [
+        'short_url_id' => $shortUrl->id,
+        'device' => 'Unknown',
+        'device_type' => 'Desktop',
+        'platform' => 'Windows',
+        'browser' => 'IE',
+        'referer' => 'https://example.com',
+    ]);
 });

@@ -8,6 +8,7 @@ use App\Http\Requests\ShortUrl\ShortUrlIndexRequest;
 use App\Http\Requests\ShortUrl\ShortUrlStoreRequest;
 use App\Http\Requests\ShortUrl\ShortUrlUpdateRequest;
 use App\Http\Resources\ShortUrlResource;
+use App\Models\Country;
 use App\Models\Domain;
 use App\Models\ShortUrl;
 use App\Settings\GeneralSettings;
@@ -185,23 +186,28 @@ class ShortUrlController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(GeneralSettings $settings)
     {
         return Inertia::render('ShortUrl/Edit', [
             'domains' => Domain::query()->pluck('url', 'id'),
+            'countries' => Country::orderBy('name', 'asc')->pluck('name', 'name'),
             'shortUrl' => [
                 'domain_id' => Domain::value('id'),
                 'slug' => Str::random(6),
+                'rules' => [],
             ],
+            'canManageRules' => $settings->enableGeolocation,
         ]);
     }
 
-    public function edit(ShortUrl $shortUrl)
+    public function edit(GeneralSettings $settings, ShortUrl $shortUrl)
     {
         return Inertia::render('ShortUrl/Edit', [
             'shortUrl' => ShortUrlResource::make($shortUrl),
+            'countries' => Country::orderBy('name', 'asc')->pluck('name', 'name'),
             'domains' => Domain::query()->pluck('url', 'id'),
             'copy' => request()->boolean('copy'),
+            'canManageRules' => $settings->enableGeolocation,
         ]);
     }
 

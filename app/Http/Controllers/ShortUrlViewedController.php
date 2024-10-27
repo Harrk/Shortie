@@ -6,9 +6,11 @@ use App\Enums\ShortUrlStatus;
 use App\Events\ShortUrlViewed;
 use App\Models\Domain;
 use App\Models\ShortUrl;
+use App\Models\ShortUrlLog;
 use App\Settings\GeneralSettings;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -22,19 +24,20 @@ class ShortUrlViewedController extends Controller
     public function __invoke(Request $request, GeneralSettings $settings, $slug): RedirectResponse|Response
     {
         $shortUrl = $this->fetchShortURLFromRequest($request, $slug);
+        $redirectionUrl = $shortUrl->url;
 
         if ($shortUrl->status == ShortUrlStatus::INACTIVE) {
             return Inertia::render('ShortUrl/Expired');
         }
 
-        DB::transaction(function () use ($request, $shortUrl, $settings) {
+        DB::transaction(function () use ($request, $shortUrl, $settings, &$redirectionUrl) {
             $hash = md5(Agent::getUserAgent().$request->ip().$shortUrl->short_url);
 
             if ($settings->enableGeolocation) {
                 $lookupData = geoip()->getLocation($request->ip());
             }
 
-            $shortUrl->logs()->create([
+            $shortUrlLog = $shortUrl->logs()->create([
                 'device' => $this->parseAgentDevice(),
                 'device_type' => Str::title($this->parseAgentDeviceType()),
                 'platform' => Str::ucfirst($this->parseAgentPlatform()),
@@ -46,6 +49,8 @@ class ShortUrlViewedController extends Controller
                 'city' => $lookupData->city ?? null,
             ]);
 
+            $redirectionUrl = $this->processShortUrlRules($shortUrl, $shortUrlLog);
+
             $shortUrl->increment('clicks');
 
             $this->deactivateShortUrlIfVisitsExceedMax($shortUrl);
@@ -53,7 +58,7 @@ class ShortUrlViewedController extends Controller
 
         event(new ShortUrlViewed($shortUrl));
 
-        return redirect()->away($shortUrl->url);
+        return redirect()->away($redirectionUrl);
     }
 
     protected function fetchShortURLFromRequest(Request $request, $slug): ShortUrl
@@ -91,5 +96,25 @@ class ShortUrlViewedController extends Controller
             $shortUrl->status = ShortUrlStatus::INACTIVE;
             $shortUrl->save();
         }
+    }
+
+    protected function processShortUrlRules(ShortUrl $shortUrl, ShortUrlLog $shortUrlLog): string
+    {
+        foreach ((array) $shortUrl->rules as $rule) {
+            [$ruleKey, $ruleOperator, $ruleValue, $redirectUrl] = array_values(Arr::only($rule, [
+                'key',
+                'operator',
+                'value',
+                'url',
+            ]));
+
+            $valueToCompare = $shortUrlLog->{$ruleKey};
+
+            if ($ruleOperator === '=' && $valueToCompare === $ruleValue) {
+                return $redirectUrl;
+            }
+        }
+
+        return $shortUrl->url;
     }
 }

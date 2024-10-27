@@ -1,0 +1,1 @@
+import{o,f as s,x as n}from"./app-4f070762.js";const r=["type"],u={__name:"NeutralButton",props:["submit"],setup(t){return(e,a)=>(o(),s("button",{class:"btn btn-neutral",type:t.submit?"submit":"button"},[n(e.$slots,"default")],8,r))}},l=u;export{l as N};

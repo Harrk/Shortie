@@ -36,6 +36,11 @@ class ShortUrlStoreRequest extends FormRequest
             ],
             'url' => 'required|url',
             'max_visits' => 'nullable|int|min:0',
+            'rules' => 'nullable|array',
+            'rules.*.key' => 'required|in:country',
+            'rules.*.operator' => 'required|in:=',
+            'rules.*.value' => 'required|string',
+            'rules.*.url' => 'required|url',
         ];
     }
 
@@ -43,6 +48,11 @@ class ShortUrlStoreRequest extends FormRequest
     {
         return [
             'slug.unique' => 'This slug is already in use by another Short URL.',
+            'rules.*.key.required' => 'A condition key is required.',
+            'rules.*.operator.required' => 'An operator is required.',
+            'rules.*.value.required' => 'A value is required.',
+            'rules.*.url.required' => 'A url is required.',
+            'rules.*.url.url' => 'A valid url is required.',
         ];
     }
 }

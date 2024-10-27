@@ -17,7 +17,7 @@
 
                 <FieldSelect
                     v-model="form.filters.role"
-                    allLabel="Any Role"
+                    anyLabel="Any Role"
                     size="sm"
                     :allowAny="true"
                     :options="roles"

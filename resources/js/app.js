@@ -20,7 +20,7 @@ createInertiaApp({
             .use(ZiggyVue)
             .use(VueApexCharts)
             .use(Vue3Toastify, {
-                autoClose: 2000,
+                autoClose: 2500,
             })
             .mount(el);
     },

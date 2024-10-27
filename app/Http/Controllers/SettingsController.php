@@ -22,7 +22,7 @@ class SettingsController extends Controller
         ]);
     }
 
-    public function update(GeneralSettings $settings, GeneralSettingsUpdateRequest $request)
+    public function update(GeneralSettingsUpdateRequest $request, GeneralSettings $settings, )
     {
         $settings->fill($request->validated());
         $settings->save();

@@ -10,7 +10,7 @@
                 <div class="md:flex md:flex-row md:space-x-4">
                     <div class="flex flex-col space-y-4 flex-1">
                         <FieldInput
-                            label="URL"
+                            label="Redirect URL"
                             placeholder="https://yourreallylongurl.com..."
                             :disabled="form.processing"
                             v-model="form.url"
@@ -79,6 +79,16 @@
             />
         </Block>
 
+        <Block
+            v-if="canManageRules"
+            title="Rules"
+        >
+            <RuleEditor
+                :form="form"
+                :countries="countries"
+            />
+        </Block>
+
         <div class="flex flex-row-reverse space-x-2 space-x-reverse mt-4">
             <PrimaryButton
                 :disabled="form.processing"
@@ -99,7 +109,7 @@
     </AuthenticatedLayout>
 </template>
 
-<script setup>
+<script setup lang="ts">
     import { Head, useForm } from "@inertiajs/vue3";
     import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
     import Block from "@/Components/Layout/Block.vue";
@@ -110,11 +120,14 @@
     import QRCode from "@/Components/QRCode.vue";
     import { toast } from 'vue3-toastify';
     import copy from "copy-to-clipboard";
+    import RuleEditor from "@/Pages/ShortUrl/Sub/RuleEditor.vue";
 
     const props = defineProps([
         'shortUrl',
         'domains',
         'copy',
+        'countries',
+        'canManageRules',
     ]);
 
     const form = useForm({
@@ -123,6 +136,7 @@
         slug: '',
         url: '',
         short_url: '',
+        rules: [],
         ...props.shortUrl,
     });
 
@@ -132,13 +146,20 @@
 
     const save = () => {
         if (form.id) {
-            form.put(route('short-url.update', form.id));
+            form.put(route('short-url.update', form.id), {
+                onSuccess: () => {
+                    toast.dark('Short URL has been saved');
+                },
+                preserveScroll: true,
+            });
         } else {
             form.post(route('short-url.store'), {
                 onSuccess: () => {
                     form.defaults({...props.shortUrl});
                     form.reset();
+                    toast.dark('Short URL has been saved');
                 },
+                preserveScroll: true,
             });
         }
     };
