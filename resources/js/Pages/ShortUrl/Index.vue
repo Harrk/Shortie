@@ -17,7 +17,7 @@
 
                 <FieldSelect
                     v-model="form.filters.domain_id"
-                    allLabel="Any Domain"
+                    anyLabel="Any Domain"
                     size="sm"
                     :allowAny="true"
                     :options="domains"

@@ -16,10 +16,10 @@
             @input="$emit('update:modelValue', $event.target.value)"
         >
             <option
-                v-if="allowAny"
+                :disabled="! allowAny"
                 value=""
             >
-                {{ allLabel || 'All' }}
+                {{ anyLabel || 'Select a value' }}
             </option>
 
             <option
@@ -50,7 +50,7 @@
 <script setup>
     const props = defineProps([
         'allowAny',
-        'allLabel',
+        'anyLabel',
         'label',
         'options',
         'disabled',

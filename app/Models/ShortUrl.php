@@ -18,10 +18,12 @@ class ShortUrl extends Model
         'slug',
         'url',
         'max_visits',
+        'rules',
     ];
 
     protected $casts = [
         'status' => ShortUrlStatus::class,
+        'rules' => 'json',
     ];
 
     public function getShortUrlAttribute()
