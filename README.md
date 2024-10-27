@@ -81,5 +81,14 @@ Then finally you will need to enable the geolocation feature via the settings pa
 There's a lot more to this so check the [documentation](https://lyften.com/projects/laravel-geoip/doc/)
 for laravel-geoip for more information on this topic.
 
+## Short URL Rules
+It is possible to redirect users to different URLs if the geolocation feature is enabled. However, this also depends on
+building the local countries table.
+
+This can be done by running the following command to import them from restcountries.com.
+```bash
+$ php artisan app:import-countries
+```
+
 ## Contributing
 Please review the CONTRIBUTING.md document before making any contributions to the project.
