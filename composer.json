@@ -11,7 +11,7 @@
         "inertiajs/inertia-laravel": "^1.0.0",
         "jenssegers/agent": "^2.6",
         "laravel/breeze": "^2.0",
-        "laravel/framework": "^11.0",
+        "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.8",
         "spatie/laravel-settings": "^3.3.1",
@@ -19,16 +19,16 @@
         "torann/geoip": "^3.0"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-latest",
         "barryvdh/laravel-debugbar": "^3.9",
         "fakerphp/faker": "^1.9.1",
-        "larastan/larastan": "^2.9",
+        "larastan/larastan": "^3.0",
         "laravel/pint": "^1.13",
-        "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^8.1",
-        "pestphp/pest": "^2.0",
-        "pestphp/pest-plugin-laravel": "^2.0",
-        "pestphp/pest-plugin-type-coverage": "^2.7",
+        "pestphp/pest": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0",
+        "pestphp/pest-plugin-type-coverage": "^3.6",
         "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
