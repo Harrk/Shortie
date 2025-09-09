@@ -1,13 +1,15 @@
 <template>
-    <div class="bg-base-100 p-3 md:p-4 rounded-box">
-        <h2
-            v-if="title"
-            class="font-semibold text-lg pb-0 mb-0"
-        >
-            {{ title }}
-        </h2>
+    <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+            <div
+                v-if="title"
+                class="card-title"
+            >
+                {{ title }}
+            </div>
 
-        <slot />
+            <slot />
+        </div>
     </div>
 </template>
 

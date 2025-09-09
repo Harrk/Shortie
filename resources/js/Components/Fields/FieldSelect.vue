@@ -1,18 +1,20 @@
 <template>
-    <div>
+    <div class="flex flex-col space-y-1">
         <label
             v-if="label"
             class="label"
+            :for="inputId"
         >
             {{ label }}
         </label>
 
         <select
-            class="select select-bordered max-w-lg w-full"
+            class="select"
             :class="{ 'select-sm': size === 'sm' }"
             :disabled="disabled"
             :required="required"
             :value="modelValue"
+            :id="inputId"
             @input="$emit('update:modelValue', $event.target.value)"
         >
             <option
@@ -33,14 +35,14 @@
 
         <p
             v-if="error"
-            class="text-red-500 text-sm mt-1"
+            class="text-red-500 text-sm"
         >
             {{ error }}
         </p>
 
         <p
             v-if="help"
-            class="mt-2 pl-1 text-xs text-base-content/80"
+            class="text-sm"
         >
             {{ help }}
         </p>
@@ -48,6 +50,8 @@
 </template>
 
 <script setup>
+    import { useId } from "vue";
+
     const props = defineProps([
         'allowAny',
         'anyLabel',
@@ -61,6 +65,8 @@
         'help',
         'optionLabel',
     ]);
+
+    const inputId = useId();
 
     defineEmits(['update:modelValue']);
 </script>

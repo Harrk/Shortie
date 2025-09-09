@@ -6,7 +6,7 @@
     <div class="flex flex-col space-y-4 mt-4">
         <div
             v-for="(rule, index) in form.rules"
-            class="p-4 bg-base-200 rounded flex flex-col space-y-2"
+            class="p-4 bg-base-200 rounded-sm flex flex-col space-y-2"
         >
             <div class="flex flex-row space-x-4">
                 <FieldSelect

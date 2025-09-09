@@ -56,9 +56,9 @@
                         />
                     </div>
 
-                    <div class="md:w-1/4 pt-10">
+                    <div class="pt-8 md:pt-0">
                         <QRCode
-                            class="max-w-32 mx-auto lg:max-w-48"
+                            class="max-w-48 mx-auto"
                             :data="fullShortUrl"
                         />
                     </div>

@@ -3,10 +3,7 @@
         id="qr-code-wrapper"
         class="p-2 lg:p-3 bg-base-300 rounded-lg"
     >
-        <canvas
-            id="qr-code"
-            class="inline-block"
-        />
+        <canvas id="qr-code" />
     </div>
 </template>
 
@@ -40,6 +37,7 @@
 
 <style lang="postcss" scoped>
     canvas {
-        @apply h-full w-full !important;
+        width: 100% !important;
+        height: 100% !important;
     }
 </style>
