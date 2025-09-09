@@ -8,7 +8,7 @@
         "php": "^8.2",
         "geoip2/geoip2": "~2.1",
         "guzzlehttp/guzzle": "^7.2",
-        "inertiajs/inertia-laravel": "^1.0.0",
+        "inertiajs/inertia-laravel": "^2.0",
         "jenssegers/agent": "^2.6",
         "laravel/breeze": "^2.0",
         "laravel/framework": "^12.0",

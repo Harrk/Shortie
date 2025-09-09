@@ -11,41 +11,36 @@ Created with Laravel, Vue, and Inertia.
 * Domain management for self-managed domains.
 
 ## Requirements
-* PHP 8.2 / PHP 8.3
+* PHP 8.2 or above
 * MySQL / Postgre / SQLite
-* Node v16: For rebuilding assets (optional)
+* Node v24: For building assets
 
 ## Installation
-First download the project to where you intend to host it from.
+First, download the project to where you intend to host it from.
 
 via HTTPS:
 ```bash
-$ git clone https://github.com/Harrk/Shortie.git
-```
-
-or via SSH:
-```
-$ git clone git@github.com:Harrk/Shortie.git
+git clone git@github.com:Harrk/Shortie.git
 ```
 
 Install dependencies.
 ```bash
-$ composer install --no-dev
+composer install --no-dev
 ```
 
 Configure your `.env` file with your database credentials.
 ```bash
-$ php artisan migrate
+php artisan migrate
 ```
 
-**Optional:** Assets are prebuilt, but you can rebuild them with the following:
+To build assets:
 ```bash
-$ yarn && yarn build
+yarn && yarn build
 ```
 
 Create yourself an admin user.
 ```bash
-$ php artisan app:create-admin
+php artisan app:create-admin
 ```
 
 Navigate to the location you're hosting the project from to verify it's all set up.
@@ -70,7 +65,7 @@ MAXMIND_LICENSE_KEY=YOUR_KEY
 
 Then run the `geoip:update` command to fetch the latest database.
 ```bash
-$ php artisan geoip:update
+php artisan geoip:update
 ```
 
 If using the MaxMind database you will need to keep this updated. This does not come preconfigured at this time, 
@@ -87,7 +82,7 @@ building the local countries table.
 
 This can be done by running the following command to import them from restcountries.com.
 ```bash
-$ php artisan app:import-countries
+php artisan app:import-countries
 ```
 
 ## Contributing
