@@ -1,8 +1,9 @@
 <template>
-    <div class="max-w-lg">
+    <div class="flex flex-col space-y-1">
         <label
             v-if="label"
             class="label"
+            :for="inputId"
         >
             <span>
                 {{ label }}
@@ -17,9 +18,10 @@
         </label>
 
         <input
+            :id="inputId"
             :placeholder="placeholder"
             :disabled="disabled"
-            class="input input-bordered w-full placeholder-base-content/50"
+            class="input"
             :form="form"
             :value="modelValue"
             :required="required"
@@ -29,14 +31,14 @@
 
         <p
             v-if="error"
-            class="text-red-500 text-sm mt-1"
+            class="text-red-500 text-sm"
         >
             {{ error }}
         </p>
 
         <p
             v-if="help"
-            class="text-base-content text-sm mt-1"
+            class="text-sm"
         >
             {{ help }}
         </p>
@@ -44,6 +46,8 @@
 </template>
 
 <script setup>
+    import { useId } from "vue";
+
     const props = defineProps([
         'label',
         'placeholder',
@@ -55,6 +59,8 @@
         'help',
         'form',
     ]);
+
+    const inputId = useId();
 
     defineEmits(['update:modelValue']);
 </script>

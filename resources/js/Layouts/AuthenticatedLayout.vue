@@ -8,7 +8,8 @@
                             <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
                             </div>
-                            <ul tabindex="0" class="menu menu-sm space-y-1 dropdown-content mt-3 z-[1] p-2 shadow-lg border border-base-200 bg-base-100 rounded-box w-52">
+
+                            <ul tabindex="0" class="menu menu-sm space-y-1 dropdown-content mt-3 z-1 p-2 shadow-lg border border-base-200 bg-base-100 rounded-box w-52">
                                 <li>
                                     <Link
                                         class="text-base"
@@ -102,10 +103,10 @@
                 <div class="pt-6">
                     <div class="flex flex-row lg:space-x-6">
                         <div class="hidden lg:block bg-base-100 min-w-48 w-56 rounded-box sticky h-fit top-4">
-                            <ul class="menu space-y-1">
+                            <ul class="menu w-full space-y-1">
                                 <li>
                                     <Link
-                                        :class="{ 'active' : route().current('dashboard') }"
+                                        :class="{ 'menu-active' : route().current('dashboard') }"
                                         :href="route('dashboard')"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -118,7 +119,7 @@
 
                                 <li>
                                     <Link
-                                        :class="{ 'active' : route().current('short-url.*') }"
+                                        :class="{ 'menu-active' : route().current('short-url.*') }"
                                         :href="route('short-url.index')"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -131,7 +132,7 @@
 
                                 <li v-if="$page.props.can['view-domains']">
                                     <Link
-                                        :class="{ 'active' : route().current('domain.*') }"
+                                        :class="{ 'menu-active' : route().current('domain.*') }"
                                         :href="route('domain.index')"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -144,7 +145,7 @@
 
                                 <li v-if="$page.props.can['view-users']">
                                     <Link
-                                        :class="{ 'active' : route().current('user.*') }"
+                                        :class="{ 'menu-active' : route().current('user.*') }"
                                         :href="route('user.index')"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -157,7 +158,7 @@
 
                                 <li v-if="$page.props.can['view-settings']">
                                     <Link
-                                        :class="{ 'active' : route().current('settings.*') }"
+                                        :class="{ 'menu-active' : route().current('settings.*') }"
                                         :href="route('settings.edit')"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -170,9 +171,9 @@
                                 </li>
                             </ul>
 
-                            <div class="border-b-2 border-dotted mx-4 border-neutral"></div>
+                            <div class="divider opacity-50 mx-4 my-0"></div>
 
-                            <ul class="menu space-y-1">
+                            <ul class="menu w-full space-y-1">
                                 <li>
                                     <Link :href="route('user.edit', $page.props.auth.user.id)">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -224,5 +225,4 @@
 
 <script setup>
     import { Link } from "@inertiajs/vue3";
-    import { computed } from "vue";
 </script>

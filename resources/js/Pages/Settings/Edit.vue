@@ -7,16 +7,12 @@
                 class="flex flex-col space-y-4"
                 @submit.prevent="save"
             >
-                <div class="form-control max-w-sm">
-                    <label class="label cursor-pointer">
-                        <span class="label-text">Allow User Registration</span>
-                        <input type="checkbox" checked="checked" class="checkbox" v-model="form.allowUserRegistration" />
-                    </label>
-
-                    <p class="mt-2 pl-1 text-xs text-base-content/80">
-                        Guests will be able to register and manage their own Short URls.
-                    </p>
-                </div>
+                <FieldToggle
+                    class="mt-2"
+                    label="Allow User Registration"
+                    help="Guests will be able to register and manage their own Short URls."
+                    v-model="form.allowUserRegistration"
+                />
 
                 <FieldSelect
                     v-if="Object.values(roles).length"
@@ -29,17 +25,16 @@
                     :options="roles"
                 />
 
-                <div class="form-control max-w-sm">
-                    <label class="label cursor-pointer">
-                        <span class="label-text">Enable Geolocation</span>
-                        <input type="checkbox" checked="checked" class="checkbox" v-model="form.enableGeolocation" />
-                    </label>
-
-                    <p class="mt-2 pl-1 text-xs text-base-content/80">
+                <FieldToggle
+                    label="Enable Geolocation"
+                    help="Guests will be able to register and manage their own Short URls."
+                    v-model="form.enableGeolocation"
+                >
+                    <template #help>
                         Enabling Geolocation will retrieve a visitor's country/city by their IP address.
                         Requires additional <a target="_blank" class="link link-primary" href="https://github.com/Harrk/Shortie?tab=readme-ov-file#enabling-geolocation">configuration</a> before enabling.
-                    </p>
-                </div>
+                    </template>
+                </FieldToggle>
 
                 <div class="flex flex-row-reverse space-x-2 space-x-reverse">
                     <PrimaryButton
@@ -60,6 +55,7 @@
     import Block from "@/Components/Layout/Block.vue";
     import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
     import FieldSelect from "@/Components/Fields/FieldSelect.vue";
+    import FieldToggle from "@/Components/Fields/FieldToggle.vue";
 
     const props = defineProps([
         'settings',
