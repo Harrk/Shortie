@@ -10,7 +10,7 @@
                 <FieldToggle
                     class="mt-2"
                     label="Allow User Registration"
-                    help="Guests will be able to register and manage their own Short URls."
+                    help="Guests will be able to register and manage their own Short URLs."
                     v-model="form.allowUserRegistration"
                 />
 
@@ -27,7 +27,7 @@
 
                 <FieldToggle
                     label="Enable Geolocation"
-                    help="Guests will be able to register and manage their own Short URls."
+                    help="Guests will be able to register and manage their own Short URLs."
                     v-model="form.enableGeolocation"
                 >
                     <template #help>

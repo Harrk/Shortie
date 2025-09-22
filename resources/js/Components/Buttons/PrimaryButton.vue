@@ -3,6 +3,7 @@
         class="btn btn-primary"
         :type="submit ? 'submit' : 'button'"
         :form="form"
+        :disabled="disabled"
     >
         <slot />
     </button>
@@ -12,5 +13,6 @@
     const props = defineProps([
         'submit',
         'form',
+        'disabled',
     ]);
 </script>
