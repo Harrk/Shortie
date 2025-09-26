@@ -17,6 +17,7 @@
         "vue": "^3.5.21"
     },
     "dependencies": {
+        "@tabler/icons-vue": "^3.35.0",
         "apexcharts": "^5.0.0",
         "copy-to-clipboard": "^3.3.3",
         "daisyui": "^5.1.9",

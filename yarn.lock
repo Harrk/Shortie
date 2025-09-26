@@ -390,6 +390,18 @@
   resolved "https://registry.yarnpkg.com/@svgdotjs/svg.select.js/-/svg.select.js-4.0.3.tgz#6af12755fd71caf703825d4f490fdf02a001cbfc"
   integrity sha512-qkMgso1sd2hXKd1FZ1weO7ANq12sNmQJeGDjs46QwDVsxSRcHmvWKL2NDF7Yimpwf3sl5esOLkPqtV2bQ3v/Jg==
 
+"@tabler/icons-vue@^3.35.0":
+  version "3.35.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons-vue/-/icons-vue-3.35.0.tgz#45378beba53ff352608dba8f2195290b8fc13857"
+  integrity sha512-m5ugq8mWYfTzx0opMcX49ADFxr3xu0IhJaOddw8Djlhx30pBOPWwOiIUBMAqlgP9TFHAysdwqrq50hBw5DxPSQ==
+  dependencies:
+    "@tabler/icons" "3.35.0"
+
+"@tabler/icons@3.35.0":
+  version "3.35.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-3.35.0.tgz#6f35247e41baba2a1b0f4dff048bb1335d6c1075"
+  integrity sha512-yYXe+gJ56xlZFiXwV9zVoe3FWCGuZ/D7/G4ZIlDtGxSx5CGQK110wrnT29gUj52kEZoxqF7oURTk97GQxELOFQ==
+
 "@tailwindcss/node@4.1.13":
   version "4.1.13"
   resolved "https://registry.yarnpkg.com/@tailwindcss/node/-/node-4.1.13.tgz#cecd0dfa4f573fd37fdbaf29403b8dba9d50f118"
