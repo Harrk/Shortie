@@ -10,21 +10,23 @@
         >
             <div class="flex flex-row space-x-4">
                 <FieldSelect
-                    :options="{
-                        country: 'Country',
-                    }"
+                    :options="availableRules"
                     class="w-1/4"
+                    :disabled="form.processing"
                     label="Condition"
                     :required="true"
                     :error="form.errors[`rules.${ index }.key`]"
                     v-model="rule.key"
+                    @change="rule.value = null"
                 />
 
                 <FieldSelect
                     :options="{
                         '=': 'Equals',
+                        '!=': 'Not Equals',
                     }"
                     class="w-32"
+                    :disabled="form.processing"
                     value="Country"
                     label="&nbsp;"
                     :required="true"
@@ -32,8 +34,25 @@
                     v-model="rule.operator"
                 />
 
+                <!-- Device Select -->
                 <FieldSelect
+                    v-if="rule.key === 'platform'"
                     class="flex-1"
+                    :disabled="form.processing"
+                    label="&nbsp;"
+                    :allow-any="false"
+                    any-label="Select a platform"
+                    :options="platforms"
+                    :required="true"
+                    :error="form.errors[`rules.${ index }.value`]"
+                    v-model="rule.value"
+                />
+
+                <!-- Country Select -->
+                <FieldSelect
+                    v-if="rule.key === 'country'"
+                    class="flex-1"
+                    :disabled="form.processing"
                     label="&nbsp;"
                     :allow-any="false"
                     any-label="Select a country"
@@ -77,10 +96,33 @@
     import FieldSelect from "@/Components/Fields/FieldSelect.vue";
     import IconClose from "@/Components/Icons/IconClose.vue";
     import NeutralButton from "@/Components/Buttons/NeutralButton.vue";
+    import { computed } from "vue";
 
     const props = defineProps([
         'form',
-        'countries'
+        'countries',
+        'geoLocationEnabled',
+    ]);
+
+    const availableRules = computed(() => {
+        let rules = {
+            'platform': 'Platform',
+        };
+
+        if (props.geoLocationEnabled) {
+            rules['country'] = 'Country';
+        }
+
+        return rules;
+    });
+
+    const platforms = computed(() => [
+        'AndroidOS',
+        'iOS',
+        'OS X',
+        'Ubuntu',
+        'Windows',
+        'Unknown',
     ]);
 
     const addRule = () => {
