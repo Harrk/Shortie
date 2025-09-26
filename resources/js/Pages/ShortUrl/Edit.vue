@@ -79,13 +79,11 @@
             />
         </Block>
 
-        <Block
-            v-if="canManageRules"
-            title="Rules"
-        >
+        <Block title="Rules">
             <RuleEditor
                 :form="form"
                 :countries="countries"
+                :geoLocationEnabled="geoLocationEnabled"
             />
         </Block>
 
@@ -120,14 +118,14 @@
     import QRCode from "@/Components/QRCode.vue";
     import { toast } from 'vue3-toastify';
     import copy from "copy-to-clipboard";
-    import RuleEditor from "@/Pages/ShortUrl/Sub/RuleEditor.vue";
+    import RuleEditor from "@/Components/ShortUrl/RuleEditor.vue";
 
     const props = defineProps([
         'shortUrl',
         'domains',
         'copy',
         'countries',
-        'canManageRules',
+        'geoLocationEnabled',
     ]);
 
     const form = useForm({

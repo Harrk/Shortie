@@ -187,7 +187,7 @@
     import { Head, router, useForm } from "@inertiajs/vue3";
     import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
     import Block from "@/Components/Layout/Block.vue";
-    import ClicksOverTime from "@/Pages/ShortUrl/Sub/ClicksOverTime.vue";
+    import ClicksOverTime from "@/Components/ShortUrl/ClicksOverTime.vue";
     import NeutralButton from "@/Components/Buttons/NeutralButton.vue";
     import FieldSelect from "@/Components/Fields/FieldSelect.vue";
 

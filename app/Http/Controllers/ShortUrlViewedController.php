@@ -40,7 +40,7 @@ class ShortUrlViewedController extends Controller
             $shortUrlLog = $shortUrl->logs()->create([
                 'device' => $this->parseAgentDevice(),
                 'device_type' => Str::title($this->parseAgentDeviceType()),
-                'platform' => Str::ucfirst($this->parseAgentPlatform()),
+                'platform' => $this->parseAgentPlatform(),
                 'browser' => $this->parseAgentBrowser(),
                 'referer' => $request->header('referer'),
                 'is_bot' => Agent::isRobot(),
@@ -63,7 +63,10 @@ class ShortUrlViewedController extends Controller
 
     protected function fetchShortURLFromRequest(Request $request, $slug): ShortUrl
     {
-        $domain = Domain::where('domain', request()->getHttpHost())->firstOrFail();
+        $domain = Domain::whereIn('domain', [
+            request()->host(),
+            request()->getHttpHost(),
+        ])->firstOrFail();
 
         return $domain->shortUrls()
             ->where('slug', $slug)
@@ -108,9 +111,17 @@ class ShortUrlViewedController extends Controller
                 'url',
             ]));
 
+            if (! $shortUrlLog->hasAttribute($ruleKey)) {
+                continue;
+            }
+
             $valueToCompare = $shortUrlLog->{$ruleKey};
 
             if ($ruleOperator === '=' && $valueToCompare === $ruleValue) {
+                return $redirectUrl;
+            }
+
+            if ($ruleOperator === '!=' && $valueToCompare !== $ruleValue) {
                 return $redirectUrl;
             }
         }

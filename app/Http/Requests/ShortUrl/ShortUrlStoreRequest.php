@@ -37,8 +37,8 @@ class ShortUrlStoreRequest extends FormRequest
             'url' => 'required|url',
             'max_visits' => 'nullable|int|min:0',
             'rules' => 'nullable|array',
-            'rules.*.key' => 'required|in:country',
-            'rules.*.operator' => 'required|in:=',
+            'rules.*.key' => 'required|in:country,platform',
+            'rules.*.operator' => 'required|in:=,!=',
             'rules.*.value' => 'required|string',
             'rules.*.url' => 'required|url',
         ];

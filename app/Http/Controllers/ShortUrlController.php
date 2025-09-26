@@ -196,7 +196,7 @@ class ShortUrlController extends Controller
                 'slug' => Str::random(6),
                 'rules' => [],
             ],
-            'canManageRules' => $settings->enableGeolocation,
+            'geoLocationEnabled' => $settings->enableGeolocation,
         ]);
     }
 
@@ -207,7 +207,7 @@ class ShortUrlController extends Controller
             'countries' => Country::orderBy('name', 'asc')->pluck('name', 'name'),
             'domains' => Domain::query()->pluck('url', 'id'),
             'copy' => request()->boolean('copy'),
-            'canManageRules' => $settings->enableGeolocation,
+            'geoLocationEnabled' => $settings->enableGeolocation,
         ]);
     }
 

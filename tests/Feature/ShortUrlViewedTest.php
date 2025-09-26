@@ -168,3 +168,73 @@ test('Short URL Rules: Redirects the user to the redirected URL if rule matches'
         'referer' => 'https://example.com',
     ]);
 });
+
+
+
+test('Short URL Rules: Redirects the user to the redirected URL if platform rule matches', function () {
+    $redirectUrl = 'https://platform.example.com';
+
+    $shortUrl = ShortUrl::factory()->create([
+        'rules' => [
+            [
+                'key' => 'platform',
+                'operator' => '=',
+                'value' => 'Windows',
+                'url' => $redirectUrl,
+            ],
+        ]
+    ]);
+
+    $this->get($shortUrl->short_url, [
+        'User-Agent' => 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; MATP; MATP)',
+        'referer' => 'https://example.com',
+    ])
+        ->assertStatus(302)
+        ->assertRedirect($redirectUrl);
+
+    $this->assertDatabaseHas('short_url_logs', [
+        'short_url_id' => $shortUrl->id,
+        'device' => 'Unknown',
+        'device_type' => 'Desktop',
+        'platform' => 'Windows',
+        'browser' => 'IE',
+        'referer' => 'https://example.com',
+    ]);
+});
+
+test("Short URL Rules: Redirects the user when operator is '!=' and condition holds", function () {
+    $redirectUrl = 'https://notequals.example.com';
+
+    $settings = app(GeneralSettings::class);
+    $settings->fill([
+        'enableGeolocation' => true,
+    ]);
+    $settings->save();
+
+    $shortUrl = ShortUrl::factory()->create([
+        'rules' => [
+            [
+                'key' => 'country',
+                'operator' => '!=',
+                'value' => 'United Kingdom',
+                'url' => $redirectUrl,
+            ],
+        ]
+    ]);
+
+    $this->get($shortUrl->short_url, [
+        'User-Agent' => 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; MATP; MATP)',
+        'referer' => 'https://example.com',
+    ])
+        ->assertStatus(302)
+        ->assertRedirect($redirectUrl);
+
+    $this->assertDatabaseHas('short_url_logs', [
+        'short_url_id' => $shortUrl->id,
+        'device' => 'Unknown',
+        'device_type' => 'Desktop',
+        'platform' => 'Windows',
+        'browser' => 'IE',
+        'referer' => 'https://example.com',
+    ]);
+});
