@@ -128,7 +128,13 @@
                 >
                     <IconInfo class="h-6 w-6 shrink-0" />
 
-                    <span>You must set up a <Link class="link link-primary" :href="route('domain.index')">Domain</Link> before adding a Short URL.</span>
+                    <span v-if="$page.props.can['view-domains']">
+                        You must set up a <Link class="link link-primary" :href="route('domain.index')">Domain</Link> before adding a Short URL.
+                    </span>
+
+                    <span v-else>
+                        Before you can create a Short URL, at least one domain must be configured by the System Admin.
+                    </span>
                 </div>
             </template>
         </Block>
