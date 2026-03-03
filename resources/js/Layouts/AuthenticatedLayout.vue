@@ -96,6 +96,7 @@
         IconSettings as IconCog,
         IconUser,
         IconLogout,
+        IconDeviceDesktop
     } from "@tabler/icons-vue";
     import ApplicationMenuLink from "@/Components/ApplicationMenuLink.vue";
 
@@ -140,7 +141,12 @@
                         route: route('domain.index'),
                         routePattern: 'domain.*',
                         visible: usePage().props.can['view-domains'],
-                    }
+                    },
+                    {
+                        name: 'Queues',
+                        route: '/horizon',
+                        external: true,
+                    },
                 ],
             },
             {

@@ -7,6 +7,10 @@ use App\Settings\GeneralSettings;
 use Illuminate\Support\Facades\Event;
 use Inertia\Testing\AssertableInertia as Assert;
 
+beforeEach(function () {
+    Queue::fake();
+});
+
 test('shortUrl has required properties', function () {
     $shortUrl = ShortUrl::factory()->create()->toArray();
 

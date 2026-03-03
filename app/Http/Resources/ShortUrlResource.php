@@ -20,6 +20,8 @@ class ShortUrlResource extends JsonResource
             'clicks' => number_format($this->clicks),
             'created_at' => $this->created_at->format('d/m/Y H:i'),
             'is_active' => $this->status === ShortUrlStatus::ACTIVE,
+            'is_healthy' => $this->is_healthy,
+            'last_health_check_at' => $this->last_health_check_at?->format('d/m/Y H:i'),
             'rules' => (array) $this->rules,
         ];
     }
