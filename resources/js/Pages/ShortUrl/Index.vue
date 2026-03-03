@@ -100,29 +100,15 @@
                                         class="tooltip"
                                         :data-tip="shortUrl.last_health_check_at ? `Last checked: ${shortUrl.last_health_check_at}` : 'Not checked yet'"
                                     >
-                                        <svg
+                                        <IconCircleCheck
                                             v-if="shortUrl.is_healthy"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke-width="1.5"
-                                            stroke="currentColor"
                                             class="w-6 h-6 text-success mx-auto"
-                                        >
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                        </svg>
+                                        />
 
-                                        <svg
+                                        <IconCircleX
                                             v-else
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke-width="1.5"
-                                            stroke="currentColor"
                                             class="w-6 h-6 text-error mx-auto"
-                                        >
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                        </svg>
+                                        />
                                     </div>
                                 </td>
                                 <td class="flex flex-col space-y-2 md:flex-row-reverse md:space-y-0 md:space-x-2 md:space-x-reverse">
@@ -183,6 +169,7 @@
     import IconChevronDown from "@/Components/Icons/IconChevronDown.vue";
     import IconInfo from "@/Components/Icons/IconInfo.vue";
     import { computed } from "vue";
+    import { IconCircleCheck, IconCircleX } from "@tabler/icons-vue";
 
     const props = defineProps([
         'shortUrls',

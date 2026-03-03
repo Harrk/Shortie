@@ -96,7 +96,6 @@
         IconSettings as IconCog,
         IconUser,
         IconLogout,
-        IconDeviceDesktop
     } from "@tabler/icons-vue";
     import ApplicationMenuLink from "@/Components/ApplicationMenuLink.vue";
 
