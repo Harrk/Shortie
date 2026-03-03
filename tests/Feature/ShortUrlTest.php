@@ -159,7 +159,7 @@ describe('User can manage own ShortURLs', function () {
             'sort' => [
                 'field' => 'clicks',
                 'order' => 'desc',
-            ]
+            ],
         ];
 
         $response = $this->get(route('short-url.index', $params))
