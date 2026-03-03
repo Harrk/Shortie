@@ -140,7 +140,12 @@
                         route: route('domain.index'),
                         routePattern: 'domain.*',
                         visible: usePage().props.can['view-domains'],
-                    }
+                    },
+                    {
+                        name: 'Queues',
+                        route: '/horizon',
+                        external: true,
+                    },
                 ],
             },
             {

@@ -12,7 +12,7 @@ class ShortUrlIndexRequest extends FormRequest
             'filters' => 'array',
             'sort' => 'array',
             'sort.field' => 'nullable|string|in:created_at,clicks',
-            'sort.order' => 'nullable|string|in:desc,asc'
+            'sort.order' => 'nullable|string|in:desc,asc',
         ];
     }
 }

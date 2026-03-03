@@ -17,6 +17,7 @@ class ShortUrlFactory extends Factory
             'slug' => Str::random(6),
             'url' => $this->faker->url,
             'clicks' => $this->faker->numberBetween(0, 10000),
+            'is_healthy' => true,
         ];
     }
 }

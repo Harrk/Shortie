@@ -20,7 +20,7 @@ return new class extends Migration
         DB::transaction(function () {
             DB::table('domains')
                 ->orderBy('id')
-                ->each(function($domain) {
+                ->each(function ($domain) {
                     $parsedUrl = parse_url($domain->url);
                     $host = Arr::get($parsedUrl, 'host');
 

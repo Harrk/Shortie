@@ -13,8 +13,9 @@ class DomainFactory extends Factory
             'url' => 'http://'.$this->faker->uuid.'.com',
             'domain' => function ($data) {
                 $parsedUrl = parse_url($data['url']);
+
                 return Arr::get($parsedUrl, 'host');
-            }
+            },
         ];
     }
 }

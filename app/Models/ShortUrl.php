@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\ShortUrlStatus;
+use App\Jobs\CheckShortUrlHealth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,12 +20,29 @@ class ShortUrl extends Model
         'url',
         'max_visits',
         'rules',
+        'is_healthy',
+        'last_health_check_at',
     ];
 
     protected $casts = [
         'status' => ShortUrlStatus::class,
         'rules' => 'json',
+        'is_healthy' => 'boolean',
+        'last_health_check_at' => 'datetime',
     ];
+
+    protected static function booted()
+    {
+        static::created(function (ShortUrl $shortUrl) {
+            CheckShortUrlHealth::dispatch($shortUrl);
+        });
+
+        static::updated(function (ShortUrl $shortUrl) {
+            if ($shortUrl->wasChanged('url')) {
+                CheckShortUrlHealth::dispatch($shortUrl);
+            }
+        });
+    }
 
     public function getShortUrlAttribute()
     {

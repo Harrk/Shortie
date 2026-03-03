@@ -7,6 +7,10 @@ use App\Settings\GeneralSettings;
 use Illuminate\Support\Facades\Event;
 use Inertia\Testing\AssertableInertia as Assert;
 
+beforeEach(function () {
+    Queue::fake();
+});
+
 test('shortUrl has required properties', function () {
     $shortUrl = ShortUrl::factory()->create()->toArray();
 
@@ -113,7 +117,7 @@ test('Short URL Rules: Redirects the user to the original URL if no rule matches
                 'value' => 'United Kingdom',
                 'url' => $redirectUrl,
             ],
-        ]
+        ],
     ]);
 
     $this->get($shortUrl->short_url, [
@@ -149,7 +153,7 @@ test('Short URL Rules: Redirects the user to the redirected URL if rule matches'
                 'value' => 'United States',
                 'url' => $redirectUrl,
             ],
-        ]
+        ],
     ]);
 
     $this->get($shortUrl->short_url, [
@@ -169,8 +173,6 @@ test('Short URL Rules: Redirects the user to the redirected URL if rule matches'
     ]);
 });
 
-
-
 test('Short URL Rules: Redirects the user to the redirected URL if platform rule matches', function () {
     $redirectUrl = 'https://platform.example.com';
 
@@ -182,7 +184,7 @@ test('Short URL Rules: Redirects the user to the redirected URL if platform rule
                 'value' => 'Windows',
                 'url' => $redirectUrl,
             ],
-        ]
+        ],
     ]);
 
     $this->get($shortUrl->short_url, [
@@ -219,7 +221,7 @@ test("Short URL Rules: Redirects the user when operator is '!=' and condition ho
                 'value' => 'United Kingdom',
                 'url' => $redirectUrl,
             ],
-        ]
+        ],
     ]);
 
     $this->get($shortUrl->short_url, [

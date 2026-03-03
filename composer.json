@@ -12,6 +12,7 @@
         "jenssegers/agent": "^2.6",
         "laravel/breeze": "^2.0",
         "laravel/framework": "^12.0",
+        "laravel/horizon": "^5.45",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.8",
         "spatie/laravel-settings": "^3.3.1",

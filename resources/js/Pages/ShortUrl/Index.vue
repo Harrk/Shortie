@@ -65,6 +65,7 @@
                                         }"
                                     />
                                 </th>
+                                <th class="text-center">Health</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -94,6 +95,22 @@
                                 </td>
                                 <td class="hidden md:table-cell">{{ shortUrl.clicks }}</td>
                                 <td class="hidden md:table-cell">{{ shortUrl.created_at }}</td>
+                                <td class="text-center">
+                                    <div
+                                        class="tooltip"
+                                        :data-tip="shortUrl.last_health_check_at ? `Last checked: ${shortUrl.last_health_check_at}` : 'Not checked yet'"
+                                    >
+                                        <IconCircleCheck
+                                            v-if="shortUrl.is_healthy"
+                                            class="w-6 h-6 text-success mx-auto"
+                                        />
+
+                                        <IconCircleX
+                                            v-else
+                                            class="w-6 h-6 text-error mx-auto"
+                                        />
+                                    </div>
+                                </td>
                                 <td class="flex flex-col space-y-2 md:flex-row-reverse md:space-y-0 md:space-x-2 md:space-x-reverse">
                                     <Link
                                         class="btn btn-square btn-neutral btn-sm"
@@ -152,6 +169,7 @@
     import IconChevronDown from "@/Components/Icons/IconChevronDown.vue";
     import IconInfo from "@/Components/Icons/IconInfo.vue";
     import { computed } from "vue";
+    import { IconCircleCheck, IconCircleX } from "@tabler/icons-vue";
 
     const props = defineProps([
         'shortUrls',

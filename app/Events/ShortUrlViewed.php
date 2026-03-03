@@ -10,7 +10,5 @@ class ShortUrlViewed
 {
     use Dispatchable, SerializesModels;
 
-    public function __construct(protected ShortUrl $shortUrl)
-    {
-    }
+    public function __construct(protected ShortUrl $shortUrl) {}
 }

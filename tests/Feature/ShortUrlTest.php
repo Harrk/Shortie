@@ -4,7 +4,12 @@ use App\Enums\Role;
 use App\Enums\ShortUrlStatus;
 use App\Models\ShortUrl;
 use App\Models\User;
+use Illuminate\Support\Facades\Queue;
 use Inertia\Testing\AssertableInertia as Assert;
+
+beforeEach(function () {
+    Queue::fake();
+});
 
 describe('User can manage own ShortURLs', function () {
     test('Create ShortURL', function (Role $role) {
@@ -121,6 +126,7 @@ describe('User can manage own ShortURLs', function () {
     });
 
     test('Index All ShortURLs', function (Role $role) {
+        Queue::fake();
         $user = User::factory()->create(['role' => $role]);
         $this->actingAs($user);
         $shortUrl = ShortUrl::factory()->create([
@@ -153,7 +159,7 @@ describe('User can manage own ShortURLs', function () {
             'sort' => [
                 'field' => 'clicks',
                 'order' => 'desc',
-            ]
+            ],
         ];
 
         $response = $this->get(route('short-url.index', $params))

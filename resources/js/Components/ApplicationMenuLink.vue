@@ -1,6 +1,6 @@
 <template>
     <Link
-        v-if="navLink.route"
+        v-if="navLink.route && ! navLink?.external"
         :href="navLink.route"
         :class="{
             'menu-active' : navLink.routePattern ? route().current(navLink.routePattern) : false,
@@ -17,6 +17,21 @@
 
         {{ navLink.name }}
     </Link>
+
+    <a
+        v-if="navLink.route && navLink?.external"
+        :href="navLink.route"
+        target="_blank"
+    >
+        <component
+            v-if="navLink.icon"
+            :is="navLink.icon"
+            class="size-5"
+            strokeWidth="1"
+        />
+
+        {{ navLink.name }}
+    </a>
 
     <details
         v-if="navLink.hasOwnProperty('children')"
